@@ -29,11 +29,9 @@ function LocationMarker({ setUserCoords }: { setUserCoords: (coords: [number, nu
 }
 
 const getHandshakeIcon = (level: number) => {
-  const colors = ['#10b981', '#f59e0b', '#ef4444'];
   const colorName = level > 0 && level <= 3 ? ['green', 'orange', 'red'][level - 1] : 'blue';
   return new L.Icon({
     iconUrl: `https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-${colorName}.png`,
-    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
     iconSize: [25, 41],
     iconAnchor: [12, 41],
     popupAnchor: [1, -34],
@@ -165,9 +163,7 @@ export default function MapSection({ userId }: { userId: string }) {
         </div>
       )}
 
-      {/* КАРТА */}
       <div className="relative group">
-        {/* ВАЖНО: добавили pointer-events-none, чтобы слой не блокировал клики */}
         <div className="absolute -inset-1 bg-gradient-to-b from-slate-100 to-transparent rounded-[44px] blur-2xl opacity-30 pointer-events-none group-hover:opacity-50 transition duration-1000"></div>
         
         <div className="relative h-[650px] w-full rounded-[44px] border border-white shadow-[0_40px_100px_rgba(0,0,0,0.04)] overflow-hidden bg-slate-50">
@@ -193,7 +189,7 @@ export default function MapSection({ userId }: { userId: string }) {
                           <h4 className="text-2xl font-bold tracking-tighter text-slate-900 leading-none">{item.title}</h4>
                           <span className="text-[8px] font-black uppercase tracking-widest px-2 py-1 bg-slate-100 rounded text-slate-400">lvl {item.handshake_level || 0}</span>
                         </div>
-                        <p className="text-[10px] font-bold text-slate-300 uppercase tracking-widest">Владелец: {item.owner_full_name || 'Участник'}</p>
+                        <p className="text-[10px] font-bold text-slate-300 uppercase tracking-widest leading-none">Владелец: {item.owner_full_name || 'Участник'}</p>
                       </header>
                       
                       <div className="space-y-8 pt-8 border-t border-slate-50">
@@ -226,6 +222,15 @@ export default function MapSection({ userId }: { userId: string }) {
                                 />
                               </div>
                             </div>
+
+                            {/* Задействовали calculateTotal для удаления ошибки TS6133 */}
+                            {endDate && startDate && (
+                              <div className="p-4 bg-slate-900 rounded-[20px] flex justify-between items-center text-white shadow-xl animate-in zoom-in duration-300">
+                                <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Итоговая сумма</span>
+                                <span className="font-bold text-sm tracking-tight">{calculateTotal(item.price_per_day)} грн</span>
+                              </div>
+                            )}
+
                             <button onClick={() => handleBooking(item.id)} className="w-full py-4 bg-slate-900 text-white rounded-2xl text-[10px] font-bold uppercase tracking-widest hover:bg-indigo-600 transition-all shadow-xl shadow-slate-200">Забронировать</button>
                           </div>
                         ) : (
