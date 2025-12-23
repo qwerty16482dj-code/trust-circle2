@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import MapSection from '../components/MapSection';
 import { supabase } from '../lib/supabase';
 import type { Session } from '@supabase/supabase-js';
