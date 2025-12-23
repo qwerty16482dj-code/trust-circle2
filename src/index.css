@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    /* Не чисто белый, а мягкий серо-голубой оттенок */
+    @apply bg-[#F9FBFF] text-slate-900 antialiased;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+}
+
+/* Эффект стеклянной поверхности для карточек */
+.premium-card {
+  @apply bg-white border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] transition-all duration-300;
+}
+
+.premium-card:hover {
+  @apply shadow-[0_20px_40px_rgb(0,0,0,0.06)] -translate-y-1;
+}
